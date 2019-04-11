@@ -1,0 +1,30 @@
+version: '3'
+services:
+  php:
+    build: .
+    ports:
+      - "8080:80"
+      - "1443:443"
+    volumes:
+      - ./app:/var/www/html
+    links:
+      - mysql
+      - mongo
+  mysql:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=bytes
+      - MYSQL_DATABASE=byteslivres
+  mongo:
+    image: mongo:3.6
+    restart: always
+    ports:
+      - "3308:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
